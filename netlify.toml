@@ -7,6 +7,12 @@
 [dev]
   autoLaunch = false
 
+[build.environment]
+  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD = "true"
+
+[context.production.environment]
+  PUPPETEER_EXECUTABLE_PATH = "/usr/bin/chromium-browser"
+
 [functions]
   node_bundler = "esbuild"
   external_node_modules = ["@sparticuz/chromium"]

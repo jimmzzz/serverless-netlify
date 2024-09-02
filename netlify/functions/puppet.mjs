@@ -11,7 +11,8 @@ export async function handler(event, context) {
     const browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
-      executablePath: process.env.CHROME_EXECUTABLE_PATH || (await chromium.executablePath('/var/task/node_modules/@sparticuz/chromium/bin')),
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || await chromium.executablePath('/opt/nodejs/node_modules/@sparticuz/chromium/bin'),
+      headless: chromium.headless,
     })
 
     const page = await browser.newPage()
@@ -39,7 +40,7 @@ export async function handler(event, context) {
     console.error(error)
     return {
       statusCode: 500,
-      body: JSON.stringify({ error }),
+      body: JSON.stringify({ error, path: await chromium.executablePath()}),
     }
   }
 }
